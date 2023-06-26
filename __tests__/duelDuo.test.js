@@ -20,7 +20,29 @@ describe("Duel Duo tests", () => {
   test("clicking See All Bots button displays list of cards", async () => {
     await driver.get("http://localhost:8000");
     await driver.findElement(By.id("see-all")).click()
-    expect(await driver.wait(until.elementLocated(By.css('#all-bots div'))),1000)
+    await driver.sleep(2000)
+
+    let allBots = await driver.findElements(By.className('bot-card'))
+
+    await driver.sleep(1000)
+
+    expect(allBots.length > 0).toBeTruthy
 
   });
+  test("Draw button displays bots", async () => {
+    await driver.get("http://localhost:8000");
+    await driver.findElement(By.id('draw')).click()
+
+    await driver.sleep(2000)
+
+    await driver.findElement(By.className('bot-btn')).click()
+
+    await driver.sleep(2000)
+
+    let playerChoices = await driver.findElements(By.xpath('//div[@id="player-duo"]/div'))
+
+    expect(playerChoices.length > 0)
+
+
+  })
 });
